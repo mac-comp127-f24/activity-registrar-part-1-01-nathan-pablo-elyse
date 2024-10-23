@@ -6,6 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("WeakerAccess")
@@ -73,6 +74,28 @@ class RegistrarTest {
         assertFalse(sally.enrollIn(comp127));
         assertFalse(comp127.getRoster().contains(sally));
     }
+
+    @Test
+    void clientsCannotModifyCourses() {
+       List<Course> courses = sally.getCourses();
+       courses.add(comp127);
+    }
+
+    @Test
+    void clientsCannotModifyCourses2() {
+       assertThrows(UnsupportedOperationException.class, () -> {
+        sally.getCourses().add(comp127);
+       });
+    }
+
+    @Test
+    void clientsCannotModifyRosters(){
+        assertThrows(UnsupportedOperationException.class, () -> {
+        comp127.getRoster().add(sally);
+        });
+    }
+
+
 
     // ------ Post-test invariant check ------
     //
